@@ -11,6 +11,7 @@ let tasks: {
 
 let mockedRemoveTask: jest.Mock;
 let mockedToggleTaskDone: jest.Mock;
+let mockedhandleUpdateTaskTitle: jest.Mock;
 
 describe('MyTasksList', () => {
 
@@ -35,10 +36,18 @@ describe('MyTasksList', () => {
 
     mockedRemoveTask = jest.fn();
     mockedToggleTaskDone = jest.fn();
+    mockedhandleUpdateTaskTitle = jest.fn();
   });
 
   it('should be able to render all tasks', () => {
-    const { getByText } = render(<TasksList tasks={tasks} removeTask={mockedRemoveTask} toggleTaskDone={mockedToggleTaskDone} />)
+    const { getByText } = render(
+      <TasksList 
+        tasks={tasks} 
+        removeTask={mockedRemoveTask} 
+        toggleTaskDone={mockedToggleTaskDone} 
+        handleUpdateTaskTitle={mockedhandleUpdateTaskTitle}
+        />
+      )
     
     getByText('Primeiro todo');
     getByText('Segundo todo');
@@ -46,7 +55,14 @@ describe('MyTasksList', () => {
   });
 
   it('should be able to handle "removeTask" event', () => {
-    const { getByTestId } = render(<TasksList tasks={tasks} removeTask={mockedRemoveTask} toggleTaskDone={mockedToggleTaskDone} />)
+    const { getByTestId } = render(
+      <TasksList 
+        tasks={tasks} 
+        removeTask={mockedRemoveTask} 
+        toggleTaskDone={mockedToggleTaskDone}  
+        handleUpdateTaskTitle={mockedhandleUpdateTaskTitle} 
+      />
+    )
     const firstTaskTrashIcon = getByTestId('trash-0');
 
     fireEvent(firstTaskTrashIcon, 'press');
@@ -55,7 +71,14 @@ describe('MyTasksList', () => {
   });
 
   it('should be able to handle "toggleTaskDone" event', () => {    
-    const { getByText } = render(<TasksList tasks={tasks} removeTask={mockedRemoveTask} toggleTaskDone={mockedToggleTaskDone} />)
+    const { getByText } = render(
+      <TasksList 
+        tasks={tasks} 
+        removeTask={mockedRemoveTask} 
+        toggleTaskDone={mockedToggleTaskDone}
+        handleUpdateTaskTitle={mockedhandleUpdateTaskTitle} 
+      />
+    )
     const secondTask = getByText('Segundo todo');
 
     fireEvent.press(secondTask);

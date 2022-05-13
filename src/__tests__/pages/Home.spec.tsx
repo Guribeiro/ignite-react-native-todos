@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
+import { Alert } from 'react-native';
 
 import { Home } from '../../pages/Home';
 
@@ -82,8 +83,11 @@ describe('Home', () => {
 
     fireEvent(firstTaskTrashIcon, 'press');
 
+    const alert = jest.spyOn(Alert, 'alert');
+
     expect(queryByText('Primeira tarefa')).toBeNull();
     expect(getByText('Segunda tarefa'));
     expect(getByText('1 tarefa'));
+    expect(alert).toHaveBeenCalled()
   });
 })
